@@ -5,37 +5,37 @@ import { Button, Header, Divider } from 'react-native-elements';
 import Constants from 'expo-constants'
 
 export default function App() {
-  const [date,setDate] = useState("Today")
+  const [date, setDate] = useState("Today")
   const [form, setForm] = useState(false)
   const [textTask, setTextTask] = useState()
+  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: false },])
 
-
-  const handleAdd =() => {
-     setForm(!form)
+  const handleAdd = () => {
+    setForm(!form)
   }
   const addTaskForm = () => {
-      return(
-        <>
+    return (
+      <>
         <View style={styles.inputContainer}>
           <TextInput style={styles.Input}
-            placeholder='Your task' 
-            onChangeText = {(text) => {getText(text)}}/>
-            
+            placeholder='Your task'
+            onChangeText={(text) => { getText(text) }} />
+
         </View>
         <View style={styles.inputContainer}>
           <TextInput style={styles.Input}
             placeholder='Date' />
         </View>
-        </>
-      )
-    }
-    
-    const getText = (text) => {
-      setTextTask(text)
-    }
-    // <View style={styles.header}>
-    //     <Text style={styles.task}> Testing</Text>
-    //   </View>
+      </>
+    )
+  }
+
+  const getText = (text) => {
+    setTextTask(text)
+  }
+  // <View style={styles.header}>
+  //     <Text style={styles.task}> Testing</Text>
+  //   </View>
 
 
   return (
@@ -49,21 +49,22 @@ export default function App() {
       />
       <Button buttonStyle={styles.addButton}
         title="Add more task"
-        onPress = { () => handleAdd()}
+        onPress={() => handleAdd()}
       />
-      {(form) ? addTaskForm(): true}
-      
+      {(form) ? addTaskForm() : true}
+
       <Divider
         orientation="horizontal"
         subHeader="Your task"
         subHeaderStyle={styles.divider}
       />
-      <View style={styles.header} >
-          <Text style={styles.task}> test</Text>
-      </View>
-      <View style={styles.header}>
-        <Text style={styles.task}> Testing</Text>
-      </View>
+      {tasks.map((task) => {
+        return (
+          <View style={styles.header} key = {task.id}>
+            <Text style={styles.task}> {task.title}</Text>
+          </View>
+        )
+      })} 
       
     </View>
   );
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   header: {
     display: 'flex',
     flexDirection: 'row',
-    
+
   },
   task: {
     backgroundColor: '#FEC196',
@@ -113,7 +114,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     color: '#FFA686',
-    fontSize: 20, 
+    fontSize: 20,
   },
 
 });
