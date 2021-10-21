@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { Input } from 'react-native-elements';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { Button,Header } from 'react-native-elements';
 import Constants from 'expo-constants'
 
 export default function App() {
@@ -10,12 +10,19 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Input
+      <Header containerStyle={styles.topBar}
+        centerComponent={{ text: 'To Do Lists', style: { color: '#fff',fontSize: 20, } }}
+      />
+      <Button style={styles.addButton}
+        title="Add"
+      />
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.Input}
           placeholder='Your task' />
-        <TouchableOpacity>
-          <Text>Add to list</Text>
-        </TouchableOpacity>
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput style={styles.Input}
+          placeholder='Date' />
       </View>
       <View style={styles.header}>
 
@@ -51,7 +58,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     flex: 1,
-
-
   },
+  Input: {
+    backgroundColor: '#FFFFFF',
+    fontSize: 20,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    padding: 5,
+    flex: 1,
+  },
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  addButton: {
+    marginTop: 64,
+  },
+  topBar: {
+    backgroundColor: 'red',
+    
+  }
 });
