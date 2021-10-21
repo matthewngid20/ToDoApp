@@ -79,14 +79,14 @@ export default function App() {
         return (
           <View style={styles.header} key = {task.id}>
             <Text style={styles.task}> {task.title}
-            
+            <Text> {date} </Text>
             </Text>
             <TouchableOpacity 
           
         >
           
           <Icon
-  name='rowing' 
+  name='calendar-times-o' 
   reverse
   color = 'red'
   />
