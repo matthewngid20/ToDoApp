@@ -7,6 +7,7 @@ import Constants from 'expo-constants'
 export default function App() {
   const [date,setDate] = useState("Today")
   const [form, setForm] = useState(false)
+  const [textTask, setTextTask] = useState()
 
 
   const handleAdd =() => {
@@ -17,7 +18,9 @@ export default function App() {
         <>
         <View style={styles.inputContainer}>
           <TextInput style={styles.Input}
-            placeholder='Your task' />
+            placeholder='Your task' 
+            onChangeText = {(text) => {getText(text)}}/>
+            
         </View>
         <View style={styles.inputContainer}>
           <TextInput style={styles.Input}
@@ -27,7 +30,12 @@ export default function App() {
       )
     }
     
-  
+    const getText = (text) => {
+      setTextTask(text)
+    }
+    // <View style={styles.header}>
+    //     <Text style={styles.task}> Testing</Text>
+    //   </View>
 
 
   return (
@@ -56,9 +64,7 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.task}> Testing</Text>
       </View>
-      <View style={styles.header}>
-        <Text style={styles.task}> Testing</Text>
-      </View>
+      
     </View>
   );
 }
