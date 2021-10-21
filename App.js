@@ -91,5 +91,9 @@ const styles = StyleSheet.create({
   topBar: {
     backgroundColor: '#FFA686',
   
+  },
+  divider: {
+    
   }
+
 });
