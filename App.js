@@ -9,7 +9,7 @@ export default function App() {
   const [date, setDate] = useState("")
   const [form, setForm] = useState(false)
   const [textTask, setTextTask] = useState('')
-  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: true },])
+  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: true, },])
 
   const id = new Date().getTime().toString()
   const today = new Date().getTime().toString()
@@ -50,11 +50,6 @@ export default function App() {
   }
 
 
-  // <View style={styles.header}>
-  //     <Text style={styles.task}> Testing</Text>
-  //   </View>
-
-
   return (
     <View style={styles.container}>
       <Header
@@ -62,7 +57,7 @@ export default function App() {
         placement='left'
         centerContainerStyle={{ flex: 2 }}
         centerComponent={{ text: 'To Do Lists', style: { color: '#fff', fontSize: 20 } }}
-        rightComponent={{ text: <Text>{date}</Text>, style: { color: '#fff', fontSize: 20 } }}
+        rightComponent={{ text: <Text style = {{color: '#fff',fontSize: 17 }}>{date}</Text> }}
       />
       <Button buttonStyle={styles.addButton}
         title="Add more task"
@@ -81,16 +76,17 @@ export default function App() {
             <Text style={styles.task}> {task.title}
               <Text> {date} </Text>
             </Text>
+            {(task.status) ? 
             <Icon
-              raised
-              name='delete'
-              color='red'
-              onPress={() => console.log('hello')} />
-            <Icon
-              raised
-              name='delete'
-              color='red'
-              onPress={() => console.log('hello')} />
+            raised
+            name='delete'
+            color='red'
+            onPress={() => console.log('hello')} />:
+          <Icon
+            raised
+            name='check-box'
+            color='red'
+            onPress={() => console.log('hello')} />}
           </View>
         )
       })}
