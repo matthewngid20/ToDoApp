@@ -5,13 +5,28 @@ import { Button, Header, Divider } from 'react-native-elements';
 import Constants from 'expo-constants'
 
 export default function App() {
-  const [date, setDate] = useState("Today")
+  const [date, setDate] = useState("")
   const [form, setForm] = useState(false)
-  const [textTask, setTextTask] = useState()
+  const [textTask, setTextTask] = useState('')
   const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: false },])
+
+  const id = new Date().getTime().toString()
+  console.log(tasks);
+  useEffect(() => {
+    setTextTask(null)
+  }, [])
+
+
+  const getText = (text) => {
+    setTextTask(text)
+  }
 
   const handleAdd = () => {
     setForm(!form)
+    if( form && textTask !== ""){
+      const addTask = [...tasks, { id: id, title: textTask, date: date }]
+      setTasks(addTask)
+    }
   }
   const addTaskForm = () => {
     return (
@@ -30,9 +45,7 @@ export default function App() {
     )
   }
 
-  const getText = (text) => {
-    setTextTask(text)
-  }
+ 
   // <View style={styles.header}>
   //     <Text style={styles.task}> Testing</Text>
   //   </View>
