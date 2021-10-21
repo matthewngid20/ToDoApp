@@ -6,7 +6,28 @@ import Constants from 'expo-constants'
 
 export default function App() {
   const [date,setDate] = useState("Today")
+  const [form, setForm] = useState(false)
 
+
+  const handleAdd =() => {
+     setForm(!form)
+  }
+  const addTaskForm = () => {
+      return(
+        <>
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.Input}
+            placeholder='Your task' />
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput style={styles.Input}
+            placeholder='Date' />
+        </View>
+        </>
+      )
+    }
+    
+  
 
 
   return (
@@ -20,15 +41,10 @@ export default function App() {
       />
       <Button buttonStyle={styles.addButton}
         title="Add more task"
+        onPress = { () => handleAdd()}
       />
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.Input}
-          placeholder='Your task' />
-      </View>
-      <View style={styles.inputContainer}>
-        <TextInput style={styles.Input}
-          placeholder='Date' />
-      </View>
+      {(form) ? addTaskForm(): true}
+      
       <Divider
         orientation="horizontal"
         subHeader="Your task"
