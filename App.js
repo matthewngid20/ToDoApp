@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { Button, Header, Divider } from 'react-native-elements';
 import Constants from 'expo-constants'
+import { Icon } from 'react-native-elements'
 
 export default function App() {
   const [date, setDate] = useState("")
@@ -11,9 +12,13 @@ export default function App() {
   const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: false },])
 
   const id = new Date().getTime().toString()
-  console.log(tasks);
+  const today = new Date().getTime().toString()
+  const test = new Date().toDateString();
+
+  console.log(test);
+  //console.log(today);
   useEffect(() => {
-    setTextTask(null)
+    setDate(test)
   }, [])
 
 
@@ -23,7 +28,7 @@ export default function App() {
 
   const handleAdd = () => {
     setForm(!form)
-    if( form && textTask !== ""){
+    if( form && textTask !== null){
       const addTask = [...tasks, { id: id, title: textTask, date: date }]
       setTasks(addTask)
     }
@@ -35,7 +40,6 @@ export default function App() {
           <TextInput style={styles.Input}
             placeholder='Your task'
             onChangeText={(text) => { getText(text) }} />
-
         </View>
         <View style={styles.inputContainer}>
           <TextInput style={styles.Input}
@@ -74,7 +78,21 @@ export default function App() {
       {tasks.map((task) => {
         return (
           <View style={styles.header} key = {task.id}>
-            <Text style={styles.task}> {task.title}</Text>
+            <Text style={styles.task}> {task.title}
+            
+            </Text>
+            <TouchableOpacity 
+          
+        >
+          
+          <Icon
+  name='rowing' 
+  reverse
+  color = 'red'
+  />
+
+        </TouchableOpacity>
+            
           </View>
         )
       })} 
@@ -100,7 +118,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderColor: '#DDDDDD',
     borderWidth: 1,
-    padding: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 10,
     flex: 1,
     margin: 5,
   },
@@ -129,5 +148,12 @@ const styles = StyleSheet.create({
     color: '#FFA686',
     fontSize: 20,
   },
+  buttons : {
+    backgroundColor: '#EE6055',
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    padding: 5,
+    margin: 5,
+  }
 
 });
