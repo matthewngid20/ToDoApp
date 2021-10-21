@@ -9,7 +9,7 @@ export default function App() {
   const [date, setDate] = useState("")
   const [form, setForm] = useState(false)
   const [textTask, setTextTask] = useState('')
-  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: false },])
+  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: true },])
 
   const id = new Date().getTime().toString()
   const today = new Date().getTime().toString()
@@ -28,7 +28,7 @@ export default function App() {
 
   const handleAdd = () => {
     setForm(!form)
-    if( form && textTask !== null){
+    if (form && textTask !== null) {
       const addTask = [...tasks, { id: id, title: textTask, date: date }]
       setTasks(addTask)
     }
@@ -49,7 +49,7 @@ export default function App() {
     )
   }
 
- 
+
   // <View style={styles.header}>
   //     <Text style={styles.task}> Testing</Text>
   //   </View>
@@ -77,26 +77,24 @@ export default function App() {
       />
       {tasks.map((task) => {
         return (
-          <View style={styles.header} key = {task.id}>
+          <View style={styles.header} key={task.id}>
             <Text style={styles.task}> {task.title}
-            <Text> {date} </Text>
+              <Text> {date} </Text>
             </Text>
-            <TouchableOpacity 
-          
-        >
-          
-          <Icon
-  name='calendar-times-o' 
-  reverse
-  color = 'red'
-  />
-
-        </TouchableOpacity>
-            
+            <Icon
+              raised
+              name='delete'
+              color='red'
+              onPress={() => console.log('hello')} />
+            <Icon
+              raised
+              name='delete'
+              color='red'
+              onPress={() => console.log('hello')} />
           </View>
         )
-      })} 
-      
+      })}
+
     </View>
   );
 }
@@ -148,7 +146,7 @@ const styles = StyleSheet.create({
     color: '#FFA686',
     fontSize: 20,
   },
-  buttons : {
+  buttons: {
     backgroundColor: '#EE6055',
     borderColor: '#DDDDDD',
     borderWidth: 1,
