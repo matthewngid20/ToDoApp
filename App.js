@@ -1,20 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { Button,Header } from 'react-native-elements';
 import Constants from 'expo-constants'
 
 export default function App() {
-
+  const [date] = useState("Today")
 
 
   return (
     <View style={styles.container}>
-      <Header containerStyle={styles.topBar}
-        centerComponent={{ text: 'To Do Lists', style: { color: '#fff',fontSize: 20, } }}
+      <Header  
+        containerStyle={styles.topBar}
+        placement = 'left'
+        centerContainerStyle = {{flex:2}}
+        centerComponent={{ text: 'To Do Lists', style: { color: '#fff',fontSize: 20}}}
+
+        rightComponent={{ text:'20/10/2021', color: '#fff' }}
       />
       <Button style={styles.addButton}
-        title="Add"
+        title="Add your task"
       />
       <View style={styles.inputContainer}>
         <TextInput style={styles.Input}
@@ -72,10 +77,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   addButton: {
-    marginTop: 64,
+    marginTop: 20,
   },
   topBar: {
     backgroundColor: 'red',
-    
+  
   }
 });
