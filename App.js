@@ -1,24 +1,24 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { Button,Header,Divider } from 'react-native-elements';
+import { Button, Header, Divider } from 'react-native-elements';
 import Constants from 'expo-constants'
 
 export default function App() {
-  const [date] = useState("Today")
+  const [date,setDate] = useState("Today")
+
 
 
   return (
     <View style={styles.container}>
-      <Header  
+      <Header
         containerStyle={styles.topBar}
-        placement = 'left'
-        centerContainerStyle = {{flex:2}}
-        centerComponent={{ text: 'To Do Lists', style: { color: '#fff',fontSize: 20}}}
-
-        rightComponent={{ text:'20/10/2021',  style: { color: '#fff',fontSize: 20}}}
+        placement='left'
+        centerContainerStyle={{ flex: 2 }}
+        centerComponent={{ text: 'To Do Lists', style: { color: '#fff', fontSize: 20 } }}
+        rightComponent={{ text: <Text>{date}</Text>, style: { color: '#fff', fontSize: 20 } }}
       />
-      <Button buttonStyle= {styles.addButton}
+      <Button buttonStyle={styles.addButton}
         title="Add more task"
       />
       <View style={styles.inputContainer}>
@@ -30,14 +30,12 @@ export default function App() {
           placeholder='Date' />
       </View>
       <Divider
-  orientation="horizontal"
-  subHeader="Your task"
-  subHeaderStyle={{ color: '#FFA686' }}
-/>
-      <View style={styles.header}>
-
-        <Text style={styles.task}> Testing</Text>
-
+        orientation="horizontal"
+        subHeader="Your task"
+        subHeaderStyle={styles.divider}
+      />
+      <View style={styles.header} >
+          <Text style={styles.task}> test</Text>
       </View>
       <View style={styles.header}>
         <Text style={styles.task}> Testing</Text>
@@ -45,7 +43,6 @@ export default function App() {
       <View style={styles.header}>
         <Text style={styles.task}> Testing</Text>
       </View>
-
     </View>
   );
 }
@@ -60,6 +57,7 @@ const styles = StyleSheet.create({
   header: {
     display: 'flex',
     flexDirection: 'row',
+    
   },
   task: {
     backgroundColor: '#FEC196',
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     flex: 1,
-    
+
   },
   inputContainer: {
     display: 'flex',
@@ -90,10 +88,10 @@ const styles = StyleSheet.create({
   },
   topBar: {
     backgroundColor: '#FFA686',
-  
   },
   divider: {
-    
-  }
+    color: '#FFA686',
+    fontSize: 20, 
+  },
 
 });
