@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { Button, Header, Divider } from 'react-native-elements';
@@ -8,19 +8,29 @@ import { Icon } from 'react-native-elements'
 export default function App() {
   const [date, setDate] = useState("")
   const [form, setForm] = useState(false)
+  const [status, setStatus] = useState(true)
   const [textTask, setTextTask] = useState('')
-  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: true, },])
+  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: status }, {id: "2", title: "finish today", status: status }])
 
   const id = new Date().getTime().toString()
   const today = new Date().getTime().toString()
-  const test = new Date().toDateString();
+  const todayDate = new Date().toDateString();
 
-  console.log(test);
-  //console.log(today);
+  
+  
   useEffect(() => {
-    setDate(test)
+    setDate(todayDate)
   }, [])
 
+  const changeStatus = (id)=> {
+    let statusTasks = [...tasks]
+    statusTasks.map( (task) => {
+      if(id == task.id){
+        task.status = !task.status
+      }
+      setTasks(statusTasks)
+    })
+  }
 
   const getText = (text) => {
     setTextTask(text)
@@ -28,9 +38,10 @@ export default function App() {
 
   const handleAdd = () => {
     setForm(!form)
-    if (form && textTask !== null) {
-      const addTask = [...tasks, { id: id, title: textTask, date: date }]
+    if (form && textTask !== '') {
+      const addTask = [...tasks, { id: id, title: textTask, date: date, status: status }]
       setTasks(addTask)
+      console.log(addTask);
     }
   }
   const addTaskForm = () => {
@@ -74,19 +85,19 @@ export default function App() {
         return (
           <View style={styles.header} key={task.id}>
             <Text style={styles.task}> {task.title}
-              <Text> {date} </Text>
+              <Text style = {styles.textCreated}> created on {date} </Text>
             </Text>
             {(task.status) ? 
             <Icon
-            raised
-            name='delete'
+            reverse
+            name=  "check-box"
             color='red'
-            onPress={() => console.log('hello')} />:
+            onPress={() => changeStatus(task.id)}/>:
           <Icon
-            raised
-            name='check-box'
+          raised
+            name='delete-sweep'
             color='red'
-            onPress={() => console.log('hello')} />}
+            onPress={() => setStatus(!task.status) } />}
           </View>
         )
       })}
@@ -148,6 +159,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     margin: 5,
+  },
+  textCreated:{
+    color: '#7F7CAF',
+    fontSize: 14
   }
 
 });
