@@ -32,6 +32,16 @@ export default function App() {
     })
   }
 
+  const deleteTask = (id)=> {
+    let filteredDate = [...tasks]
+    let deleteTasks = filteredDate.filter( (task) => {
+      if(id !== task.id){
+        return task
+      }
+    })
+    setTasks(deleteTasks)
+  }
+
   const getText = (text) => {
     setTextTask(text)
   }
@@ -97,7 +107,7 @@ export default function App() {
           raised
             name='delete-sweep'
             color='red'
-            onPress={() => setStatus(!task.status) } />}
+            onPress={() => deleteTask(task.id)} />}
           </View>
         )
       })}
