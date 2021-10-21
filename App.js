@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
-import { Button,Header } from 'react-native-elements';
+import { Button,Header,Divider } from 'react-native-elements';
 import Constants from 'expo-constants'
 
 export default function App() {
@@ -16,10 +16,10 @@ export default function App() {
         centerContainerStyle = {{flex:2}}
         centerComponent={{ text: 'To Do Lists', style: { color: '#fff',fontSize: 20}}}
 
-        rightComponent={{ text:'20/10/2021', color: '#fff' }}
+        rightComponent={{ text:'20/10/2021',  style: { color: '#fff',fontSize: 20}}}
       />
-      <Button style={styles.addButton}
-        title="Add your task"
+      <Button buttonStyle= {styles.addButton}
+        title="Add more task"
       />
       <View style={styles.inputContainer}>
         <TextInput style={styles.Input}
@@ -29,6 +29,11 @@ export default function App() {
         <TextInput style={styles.Input}
           placeholder='Date' />
       </View>
+      <Divider
+  orientation="horizontal"
+  subHeader="Your task"
+  subHeaderStyle={{ color: '#FFA686' }}
+/>
       <View style={styles.header}>
 
         <Text style={styles.task}> Testing</Text>
@@ -48,7 +53,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'powderblue',
+    backgroundColor: '#63474D',
     alignItems: 'center',
     marginTop: Constants.statusBarHeight,
   },
@@ -57,12 +62,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   task: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#FEC196',
     fontSize: 20,
     borderColor: '#DDDDDD',
     borderWidth: 1,
     padding: 5,
     flex: 1,
+    margin: 5,
   },
   Input: {
     backgroundColor: '#FFFFFF',
@@ -71,16 +77,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     flex: 1,
+    
   },
   inputContainer: {
     display: 'flex',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    margin: 5,
   },
   addButton: {
     marginTop: 20,
+    backgroundColor: '#FFA686',
   },
   topBar: {
-    backgroundColor: 'red',
+    backgroundColor: '#FFA686',
   
   }
 });
