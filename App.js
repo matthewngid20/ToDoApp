@@ -4,13 +4,14 @@ import { StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
 import { Button, Header, Divider } from 'react-native-elements';
 import Constants from 'expo-constants'
 import { Icon } from 'react-native-elements'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const [date, setDate] = useState("")
   const [form, setForm] = useState(false)
   const [status, setStatus] = useState(true)
   const [textTask, setTextTask] = useState('')
-  const [tasks, setTasks] = useState([{ id: "1", title: "To do today", status: status }, { id: "2", title: "finish today", status: status }])
+  const [tasks, setTasks] = useState([])
 
   const id = new Date().getTime().toString()
   const today = new Date().getTime().toString()
@@ -20,33 +21,42 @@ export default function App() {
 
   useEffect(() => {
     setDate(todayDate)
+    loadData()
   }, [])
 
-  const changeStatus = (id) => {
+  const changeStatus = async (id) => {
     let statusTasks = [...tasks]
     statusTasks.map((task) => {
       if (id == task.id) {
         task.status = !task.status
-      }
-      setTasks(statusTasks)
+        try {
+           AsyncStorage.removeItem("listItems")
+           AsyncStorage.setItem("listItems", JSON.stringify(statusTasks))
+        } catch (error) {
+          alert(error)
+        }
+      }  
     })
+    setTasks(statusTasks)
   }
 
-  const deleteTask = (id) => {
-    let filteredDate = [...tasks]
-    let deleteTasks = filteredDate.filter((task) => {
-      if (id !== task.id) {
-        return task
-      }
-    })
-    setTasks(deleteTasks)
+
+  const deleteTask = async (task) => {
+    const newData = tasks.filter((item) => item.id != task)
+    setTasks(newData)
+    try {
+      await AsyncStorage.removeItem("listItems")
+      await AsyncStorage.setItem("listItems", JSON.stringify(newData))
+    } catch (error) {
+      alert(error)
+    }
   }
 
   const getText = (text) => {
     setTextTask(text)
   }
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     setForm(!form)
     if (form && textTask.length < 3){
       alert(invalidMessage)
@@ -55,9 +65,30 @@ export default function App() {
       const addTask = [...tasks, { id: id, title: textTask, date: date, status: status }]
       setTasks(addTask)
       console.log(addTask);
+      try {
+        console.log(tasks);
+        const jsonValue = JSON.stringify(addTask)
+        await AsyncStorage.setItem('listItems', jsonValue)
+        console.log("Successful Added to listItems");
+        console.log("Json value is" + jsonValue);
+      } catch (error) {
+        
+      }
     }
     setTextTask('')
   }
+
+  const loadData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('listItems')
+      return jsonValue != null ? setTasks(JSON.parse(jsonValue)) : null;
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+
+
   const addTaskForm = () => {
     return (
       <>
