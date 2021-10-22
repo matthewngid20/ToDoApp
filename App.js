@@ -30,12 +30,12 @@ export default function App() {
       if (id == task.id) {
         task.status = !task.status
         try {
-           AsyncStorage.removeItem("listItems")
-           AsyncStorage.setItem("listItems", JSON.stringify(statusTasks))
+          AsyncStorage.removeItem("listItems")
+          AsyncStorage.setItem("listItems", JSON.stringify(statusTasks))
         } catch (error) {
           alert(error)
         }
-      }  
+      }
     })
     setTasks(statusTasks)
   }
@@ -58,7 +58,7 @@ export default function App() {
 
   const handleAdd = async () => {
     setForm(!form)
-    if (form && textTask.length < 3){
+    if (form && textTask.length < 3) {
       alert(invalidMessage)
     }
     else if (form && textTask !== '') {
@@ -72,7 +72,7 @@ export default function App() {
         console.log("Successful Added to listItems");
         console.log("Json value is" + jsonValue);
       } catch (error) {
-        
+
       }
     }
     setTextTask('')
@@ -105,14 +105,40 @@ export default function App() {
     )
   }
 
+  const Task = () => {
+    return (
+      tasks.map((task) => {
+        return (
+          <View style={styles.header} key={task.id}>
+            <Text style={[styles.task, (!task.status) ? styles.completeTask : false]}>
+              {task.title} {"\n"}
+              <Text style={styles.textCreated}> created on {date} </Text>
+            </Text>
+            {(task.status) ?
+              <Icon
+                reverse
+                name="check-box"
+                color='#5F661A'
+                onPress={() => changeStatus(task.id)} /> :
+              <Icon
+                reverse
+                name='delete-sweep'
+                color='red'
+                onPress={() => deleteTask(task.id)} />}
+          </View>
+        )
+      })
+    )
+  }
 
+  //Main code 
   return (
     <View style={styles.container}>
       <Header
         containerStyle={styles.topBar}
         placement='left'
-        centerComponent={{ text: 'To Do Lists', style: { color: '#E7E7CE', fontSize: 20 } }}
-        rightComponent={{ text: <Text style={{ color: '#E7E7CE', fontSize: 17 }}>{date}</Text> }}
+        centerComponent={{ text: 'To Do Lists', style: { color: '#E7E7CE', fontSize: 20, fontFamily: "Cochin" } }}
+        rightComponent={{ text: <Text style={{ color: '#E7E7CE', fontSize: 17, fontFamily: "Cochin" }}>{date}</Text> }}
       />
       <Button buttonStyle={styles.addButton}
         onPress={() => handleAdd()}
@@ -139,27 +165,11 @@ export default function App() {
           flexDirection: 'row',
         }}
       >
-        {tasks.map((task) => {
-          return (
-            <View style={styles.header} key={task.id}>
-              <Text style={styles.task}>
-                {task.title} {"\n"}
-                <Text style={styles.textCreated}> created on {date} </Text>
-              </Text>
-              {(task.status) ?
-                <Icon
-                  reverse
-                  name="check-box"
-                  color='#5F661A'
-                  onPress={() => changeStatus(task.id)} /> :
-                <Icon
-                  reverse
-                  name='delete-sweep'
-                  color='red'
-                  onPress={() => deleteTask(task.id)} />}
-            </View>
-          )
-        })}
+        {(tasks.length === 0) ?
+          <Text>tets</Text>
+          : <Task />
+
+        }
       </ScrollView>
     </View>
   );
@@ -186,6 +196,8 @@ const styles = StyleSheet.create({
     margin: 5,
     color: "#020807",
     width: 260,
+  },
+  completeTask: {
     textDecorationLine: 'line-through'
   },
   Input: {
@@ -223,6 +235,6 @@ const styles = StyleSheet.create({
     color: '#610000',
     fontSize: 12,
     textAlign: 'right',
-  }
+  },
 
 });
