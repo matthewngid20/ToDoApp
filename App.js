@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, TextInput } from 'react-native';
-import { Button, Header, Divider, Text,Badge } from 'react-native-elements';
+import { Button, Header, Divider, Text, Badge } from 'react-native-elements';
 import Constants from 'expo-constants'
 import { Icon } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -18,6 +18,15 @@ export default function App() {
   const todayDate = new Date().toDateString();
   const invalidMessage = "Please enter at least 3 characters"
   const taskNumbers = tasks.length
+
+  const colorBadge = (id) => {
+    let x
+    if (id === false) {
+      x = "success"
+    }
+    else x = "error"
+    return x
+  }
 
   useEffect(() => {
     setDate(todayDate)
@@ -95,21 +104,20 @@ export default function App() {
           <TextInput style={styles.Input}
             placeholder='Your task'
             onChangeText={(text) => { getText(text) }} />
-            <Button
-          type="clear"
-          icon={
-            <Icon
-              onPress={() => setForm(!form)}
-              reverse
-              size = {17}
-              name='close'
-              color='#C80303'
-              reverseColor="#fff"
-            />
-          }
-        />
+          <Button
+            type="clear"
+            icon={
+              <Icon
+                onPress={() => setForm(!form)}
+                reverse
+                size={17}
+                name='close'
+                color='#C80303'
+                reverseColor="#fff"
+              />
+            }
+          />
         </View>
-        
       </>
     )
   }
@@ -118,8 +126,8 @@ export default function App() {
     return (
       tasks.map((task) => {
         return (
-
           <View style={styles.header} key={task.id}>
+            <Badge status={colorBadge(task.status)} />
             <Text style={[styles.task, (!task.status) ? styles.completeTask : false]}>
               {task.title} {"\n"}
               <Text style={styles.textCreated}> created on {date} </Text>
@@ -127,13 +135,13 @@ export default function App() {
             {(task.status) ?
               <Icon
                 reverse
-                size = {17}
+                size={19}
                 name="check-box"
                 color='#5F661A'
                 onPress={() => changeStatus(task.id)} /> :
               <Icon
                 reverse
-                size = {17}
+                size={19}
                 name='delete-sweep'
                 color='red'
                 onPress={() => deleteTask(task.id)} />}
@@ -160,9 +168,7 @@ export default function App() {
         subHeader="Your task"
         subHeaderStyle={styles.divider}
       />
-       <Badge status="error" 
-        value = {taskNumbers}
-        size  ='large'/>
+      <Badge status={ (taskNumbers ===0)? 'success': 'error'} value={<Text style={styles.noti}>{taskNumbers}</Text>} />
       <ScrollView
         style={{
           flexDirection: 'row',
@@ -235,7 +241,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   addButton: {
-    marginBottom:50
+    marginBottom: 50
   },
   topBar: {
     backgroundColor: '#0C0C00',
@@ -263,6 +269,5 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     margin: 5,
     width: 350
-  }
-
+  },
 });
