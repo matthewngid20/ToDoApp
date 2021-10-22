@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, TextInput } from 'react-native';
-import { Button, Header, Divider, Text } from 'react-native-elements';
+import { Button, Header, Divider, Text,Badge } from 'react-native-elements';
 import Constants from 'expo-constants'
 import { Icon } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import DateTimePicker from '@react-native-community/datetimepicker';
+
 
 export default function App() {
   const [date, setDate] = useState("")
@@ -17,12 +17,13 @@ export default function App() {
   const today = new Date()
   const todayDate = new Date().toDateString();
   const invalidMessage = "Please enter at least 3 characters"
-
+  const taskNumbers = tasks.length
 
   useEffect(() => {
     setDate(todayDate)
     loadData()
   }, [])
+
 
   const changeStatus = async (id) => {
     let statusTasks = [...tasks]
@@ -94,29 +95,30 @@ export default function App() {
           <TextInput style={styles.Input}
             placeholder='Your task'
             onChangeText={(text) => { getText(text) }} />
-        </View>
-        <Button
+            <Button
           type="clear"
           icon={
             <Icon
               onPress={() => setForm(!form)}
               reverse
+              size = {17}
               name='close'
               color='#C80303'
               reverseColor="#fff"
             />
           }
         />
+        </View>
+        
       </>
     )
   }
 
-  const Task = () => {
+  const Task = (props) => {
     return (
-
       tasks.map((task) => {
         return (
-          <>
+
           <View style={styles.header} key={task.id}>
             <Text style={[styles.task, (!task.status) ? styles.completeTask : false]}>
               {task.title} {"\n"}
@@ -125,21 +127,17 @@ export default function App() {
             {(task.status) ?
               <Icon
                 reverse
-                size = '20'
+                size = {17}
                 name="check-box"
                 color='#5F661A'
-                
                 onPress={() => changeStatus(task.id)} /> :
               <Icon
                 reverse
-                size = '20'
+                size = {17}
                 name='delete-sweep'
                 color='red'
-                onPress={() => deleteTask(task.id)} />}   
+                onPress={() => deleteTask(task.id)} />}
           </View>
-          <Divider orientation="vertical" />
-          </>
-          
         )
       })
     )
@@ -151,20 +149,8 @@ export default function App() {
       <Header
         containerStyle={styles.topBar}
         placement='left'
-        centerComponent={{ text: 'To Do Lists', style: { color: '#E7E7CE', fontSize: 20, fontFamily: "Cochin" } }}
+        centerComponent={{ text: 'To Do Lists ', style: { color: '#E7E7CE', fontSize: 37, fontFamily: "Cochin" } }}
         rightComponent={{ text: <Text style={{ color: '#E7E7CE', fontSize: 17, fontFamily: "Cochin" }}>{date}</Text> }}
-      />
-      <Button buttonStyle={styles.addButton}
-        onPress={() => handleAdd()}
-        type="clear"
-        icon={
-          <Icon
-            reverse
-            name='add-circle'
-            color='#17EA41'
-            reverseColor="#fff"
-          />
-        }
       />
 
       {(form) ? addTaskForm() : true}
@@ -174,6 +160,9 @@ export default function App() {
         subHeader="Your task"
         subHeaderStyle={styles.divider}
       />
+       <Badge status="error" 
+        value = {taskNumbers}
+        size  ='large'/>
       <ScrollView
         style={{
           flexDirection: 'row',
@@ -182,9 +171,24 @@ export default function App() {
           <Text style={styles.noDataText} h4>
             Well done! there is no tasks left
           </Text>
-          : <Task />
+          : <Task key={id} />
         }
+        <Divider orientation="vertical" />
       </ScrollView>
+      <Button buttonStyle={styles.addButton}
+        onPress={() => handleAdd()}
+        type="clear"
+        icon={
+          <Icon
+            reverse
+            size={25}
+            name='add-circle'
+            color='#17EA41'
+            reverseColor="#fff"
+          />
+        }
+      />
+
     </View>
   );
 }
@@ -231,7 +235,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   addButton: {
-    marginTop: 20,
+    marginBottom:50
   },
   topBar: {
     backgroundColor: '#0C0C00',
