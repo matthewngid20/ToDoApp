@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     margin: 5,
   },
   addButton: {
-    marginBottom: 50
+    marginBottom: 7
   },
   topBar: {
     backgroundColor: '#0C0C00',
