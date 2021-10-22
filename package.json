@@ -9,6 +9,8 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
+    "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-community/datetimepicker": "^3.5.2",
     "antd": "^4.16.13",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
@@ -16,8 +18,7 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-elements": "^3.4.2",
-    "react-native-web": "~0.13.12",
-    "@react-native-async-storage/async-storage": "~1.15.0"
+    "react-native-web": "~0.13.12"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"

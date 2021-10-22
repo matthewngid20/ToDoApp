@@ -1,10 +1,10 @@
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TextInput } from 'react-native';
-import { Button, Header, Divider } from 'react-native-elements';
+import { StyleSheet, View, ScrollView, TextInput } from 'react-native';
+import { Button, Header, Divider, Text } from 'react-native-elements';
 import Constants from 'expo-constants'
 import { Icon } from 'react-native-elements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default function App() {
   const [date, setDate] = useState("")
@@ -14,7 +14,7 @@ export default function App() {
   const [tasks, setTasks] = useState([])
 
   const id = new Date().getTime().toString()
-  const today = new Date().getTime().toString()
+  const today = new Date()
   const todayDate = new Date().toDateString();
   const invalidMessage = "Please enter at least 3 characters"
 
@@ -100,7 +100,22 @@ export default function App() {
         <View style={styles.inputContainer}>
           <TextInput style={styles.Input}
             placeholder='Date' />
+          {/* <DateTimePicker
+            value={today}
+            display="default" /> */}
         </View>
+        <Button
+          type="clear"
+          icon={
+            <Icon
+              onPress={() => setForm(!form)}
+              reverse
+              name='close'
+              color='#C80303'
+              reverseColor="#fff"
+            />
+          }
+        />
       </>
     )
   }
@@ -151,10 +166,10 @@ export default function App() {
             reverseColor="#fff"
           />
         }
-
       />
-      {(form) ? addTaskForm() : true}
 
+      {(form) ? addTaskForm() : true}
+      <Divider orientation="vertical" />
       <Divider
         orientation="horizontal"
         subHeader="Your task"
@@ -166,7 +181,8 @@ export default function App() {
         }}
       >
         {(tasks.length === 0) ?
-          <Text>tets</Text>
+          <Text style={styles.noDataText} h4> Well done! there is no tasks left</Text>
+
           : <Task />
 
         }
@@ -207,7 +223,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     flex: 1,
-
   },
   inputContainer: {
     display: 'flex',
@@ -222,7 +237,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     color: '#FFA686',
-    fontSize: 20,
+    fontSize: 30,
   },
   buttons: {
     backgroundColor: '#EE6055',
@@ -236,5 +251,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'right',
   },
+  noDataText: {
+    textAlign: 'center',
+    backgroundColor: '#C3BDBD',
+    paddingVertical: 12,
+    paddingHorizontal: 10,
+    margin: 5,
+    width: 350
+  }
 
 });
