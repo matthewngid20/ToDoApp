@@ -69,8 +69,6 @@ export default function App() {
         console.log(tasks);
         const jsonValue = JSON.stringify(addTask)
         await AsyncStorage.setItem('listItems', jsonValue)
-        console.log("Successful Added to listItems");
-        console.log("Json value is" + jsonValue);
       } catch (error) {
 
       }
@@ -97,13 +95,6 @@ export default function App() {
             placeholder='Your task'
             onChangeText={(text) => { getText(text) }} />
         </View>
-        <View style={styles.inputContainer}>
-          <TextInput style={styles.Input}
-            placeholder='Date' />
-          {/* <DateTimePicker
-            value={today}
-            display="default" /> */}
-        </View>
         <Button
           type="clear"
           icon={
@@ -122,8 +113,10 @@ export default function App() {
 
   const Task = () => {
     return (
+
       tasks.map((task) => {
         return (
+          <>
           <View style={styles.header} key={task.id}>
             <Text style={[styles.task, (!task.status) ? styles.completeTask : false]}>
               {task.title} {"\n"}
@@ -132,15 +125,21 @@ export default function App() {
             {(task.status) ?
               <Icon
                 reverse
+                size = '20'
                 name="check-box"
                 color='#5F661A'
+                
                 onPress={() => changeStatus(task.id)} /> :
               <Icon
                 reverse
+                size = '20'
                 name='delete-sweep'
                 color='red'
-                onPress={() => deleteTask(task.id)} />}
+                onPress={() => deleteTask(task.id)} />}   
           </View>
+          <Divider orientation="vertical" />
+          </>
+          
         )
       })
     )
@@ -178,13 +177,12 @@ export default function App() {
       <ScrollView
         style={{
           flexDirection: 'row',
-        }}
-      >
+        }}>
         {(tasks.length === 0) ?
-          <Text style={styles.noDataText} h4> Well done! there is no tasks left</Text>
-
+          <Text style={styles.noDataText} h4>
+            Well done! there is no tasks left
+          </Text>
           : <Task />
-
         }
       </ScrollView>
     </View>
@@ -205,7 +203,10 @@ const styles = StyleSheet.create({
   },
   task: {
     textAlign: 'left',
-    backgroundColor: '#C3BDBD',
+    backgroundColor: '#8AE9C1',
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#9FB798',
     fontSize: 20,
     paddingVertical: 12,
     paddingHorizontal: 10,
@@ -221,7 +222,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     borderColor: '#DDDDDD',
     borderWidth: 1,
-    padding: 5,
+    padding: 15,
     flex: 1,
   },
   inputContainer: {
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
   noDataText: {
     textAlign: 'center',
-    backgroundColor: '#C3BDBD',
+    backgroundColor: '#8AE9C1',
     paddingVertical: 12,
     paddingHorizontal: 10,
     margin: 5,
