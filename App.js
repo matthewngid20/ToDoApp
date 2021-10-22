@@ -17,7 +17,18 @@ export default function App() {
   const today = new Date()
   const todayDate = new Date().toDateString();
   const invalidMessage = "Please enter at least 3 characters"
-  const taskNumbers = tasks.length
+  
+  
+  const taskNumbers = () => {
+    let count = 0
+    tasks.map( (task) => {
+      if(task.status === true){
+        count++
+      }
+    })
+    return count
+  }
+  
 
   const colorBadge = (id) => {
     let x
@@ -168,7 +179,7 @@ export default function App() {
         subHeader="Your task"
         subHeaderStyle={styles.divider}
       />
-      <Badge status={ (taskNumbers ===0)? 'success': 'error'} value={<Text style={styles.noti}>{taskNumbers}</Text>} />
+      <Badge status={ (taskNumbers() ===0)? 'success': 'error'} value={<Text >{taskNumbers()}</Text>} />
       <ScrollView
         style={{
           flexDirection: 'row',
